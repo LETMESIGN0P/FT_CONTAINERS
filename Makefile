@@ -1,9 +1,10 @@
 NAME		=	test
 
-SRC		=	main.cpp \
-			tests_vector.cpp
+SRCS		=	mainft.cpp
+			#main.cpp
+			#tests_vector.cpp
 			#tests_map.cpp \
-			#tests_stack.cpp
+			tests_stack.cpp
 
 INC		=	stack.h \
 			vector.h \
@@ -17,7 +18,7 @@ INC		=	stack.h \
 			colormod.h \
 			tests_containers.h \
 
-OBJS		=	${addprefix objs/,${notdir ${SRC:.cpp=.o}}}
+OBJS		=	${addprefix objs/,${notdir ${SRCS:.cpp=.o}}}
 
 CC		=	g++
 
@@ -29,8 +30,8 @@ all:
 			@mkdir -p objs
 			${MAKE} ${NAME}
 
-objs/%.o:		sources/%.cpp ${addprefix headers/,${INC}}
-			${CC} ${CFLAGS} -c $< -o $@ -I headers
+objs/%.o:		srcs/%.cpp ${addprefix includes/,${INC}}
+			${CC} ${CFLAGS} -c $< -o $@ -I includes
 
 ${NAME}:		${OBJS}
 			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
