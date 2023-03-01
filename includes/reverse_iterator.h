@@ -64,11 +64,6 @@ namespace ft
 			return (reverse_iterator(_it - n));
 		}
 
-		reverse_iterator operator+(difference_type n) const
-		{
-			return (reverse_iterator(_it - n));
-		}
-
 		reverse_iterator &operator++()
 		{
 			--_it;

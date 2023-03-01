@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "avl_tree.h"
+#include <avl_tree.h>
 
 namespace ft
 {
@@ -21,7 +21,7 @@ namespace ft
 		typedef typename allocator_type::const_pointer              		const_pointer;
 		typedef bidirectional_iterator<used_value_type>				iterator;
 		typedef const_bidirectional_iterator<used_value_type >			const_iterator;
-		typedef reverse_iterator<iterator>					reverse_iterator;
+		typedef ft::reverse_iterator<iterator>					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type 	difference_type;
 		typedef size_t                                              		size_type;
