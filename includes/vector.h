@@ -8,7 +8,7 @@
 #include <reverse_iterator.h>
 #include <compare.h>
 #include <enable_if.h>
-
+#include <distance.h>
 
 namespace ft
 {
@@ -227,7 +227,7 @@ namespace ft
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
 		assign (InputIterator first, InputIterator last)
 		{
-			size_type n = last - first;
+			size_type n = ft::distance(first, last);
 			if (n)
 			{
 				reserve(n);
@@ -311,7 +311,7 @@ namespace ft
 		insert (iterator position, InputIterator first, InputIterator last)
 		{
 			bool reallocated = false;
-			size_type n = last - first;
+			size_type n = ft::distance(first, last);
 			pointer begin_old = _begin;
 			pointer storage_end_old = _storage_end;
 			
@@ -359,7 +359,7 @@ namespace ft
 
 		iterator erase (iterator first, iterator last)
 		{
-			size_type n = last - first;
+			size_type n = ft::distance(first, last);
 			if (n)
 			{
 				pointer start = first.base();

@@ -1,18 +1,15 @@
 #pragma once
-
 #include <memory>
 #include <iostream>
+
 #include <iterator>
 #include <algorithm>
-#include <map>
-
-#include <enable_if.h>
-#include <compare.h>
-#include <reverse_iterator.h>
-#include <bidirectional_iterator.h>
-#include <const_bidirectional_iterator.h>
-#include <pair.h>
-#include <map.h>
+#include "../includes/enable_if.hpp"
+#include "../includes/compare.hpp"
+#include "../includes/reverse_iterator.hpp"
+#include "../includes/bidirectional_iterator.hpp"
+#include "../includes/const_bidirectional_iterator.hpp"
+#include "../includes/pair.hpp"
 
 namespace ft
 {
@@ -20,28 +17,30 @@ namespace ft
 	template <class Pair, class Compare=std::less<typename Pair::first_type>, class Alloc=std::allocator<Node<Pair> > >
 	class tree
 	{
-		Alloc		_alloc;	
-		Compare		_compare;
-		Node<Pair>	_root;
-		size_t		_size;
-		Node<Pair>	_real_end;
-		Node<Pair>	_maxi;
 
-		public:
+	public:
+		typedef Pair													value_type;
+		typedef typename value_type::first_type									key_type;
+		typedef typename value_type::second_type									val_type;
+		typedef Compare													compare_type;
+		typedef Alloc													allocator_type;
+		typedef Node<Pair>												*node_ptr;
+		typedef size_t 													size_type;
+		typedef ft::bidirectional_iterator<value_type>					iterator;    
+		typedef ft::const_bidirectional_iterator<const value_type>					const_iterator;
+        typedef ft::reverse_iterator<iterator>							reverse_iterator;    
+		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+	private:
+		allocator_type													_alloc;	
+		compare_type													_compare;
+		node_ptr														_root;
+		size_type														_size;
+		node_ptr														_real_end;
+		node_ptr														_maxi;
+	public :
+		
 
-		typedef Pair								value_type;
-		typedef typename value_type::first_type					key_type;
-		typedef typename value_type::second_type				val_type;
-		typedef Compare								compare_type;
-		typedef Alloc								allocator_type;
-		typedef Node<Pair>							*node_ptr;
-		typedef size_t 								size_type;
-		typedef ft::bidirectional_iterator<value_type>				iterator;    
-		typedef ft::const_bidirectional_iterator<const value_type>		const_iterator;
-	        typedef ft::reverse_iterator<iterator>						reverse_iterator;    
-		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 	
-		public :
 		
 		tree(const compare_type &comp = compare_type(), const allocator_type &alloc = allocator_type()) : _alloc(alloc), _compare(comp), _root(NULL), _size(0), _real_end(), _maxi(NULL)
 		{
@@ -60,7 +59,6 @@ namespace ft
 
 
 		}
-
 		node_ptr	minii() const
 		{
 			node_ptr	current;
@@ -70,7 +68,6 @@ namespace ft
 				current = current->left;
 			return (current);
 		}
-
 		node_ptr	maxii() const
 		{
 			node_ptr	current;
@@ -102,8 +99,7 @@ namespace ft
 			_maxi = NULL;
 		}
 
-		private :
-
+	private :
 		node_ptr	new_node(value_type const &val)
 		{
 			node_ptr node = _alloc.allocate(sizeof(node_ptr));
@@ -130,7 +126,6 @@ namespace ft
 				_alloc.destroy(tmp);
 				_alloc.deallocate(tmp, sizeof(node_ptr));
 				tmp = NULL;
-
 			}
 			if (save != _root)
 				clear_all(_root);
@@ -161,34 +156,34 @@ namespace ft
 			return(NULL);
 		}
 	
-    		void	is_new_max(const value_type &val, node_ptr last_add)
-    		{
+    	void	is_new_max(const value_type &val, node_ptr last_add)
+    	{
 			(void)val;
 
 			if (last_add == NULL)
 				return;
-			if (_maxi == NULL)
-			{
-				_maxi = last_add;
-				last_add->end = _real_end;
-				_real_end->daddy = last_add;
+    	    if (_maxi == NULL)
+    	    {
+    	        _maxi = last_add;
+    	        last_add->end = _real_end;
+    	        _real_end->daddy = last_add;
 				_real_end->print = 0;
-				add_max();
-    	    		}
-    	   		else
-    	    		{
-				if (_compare(_maxi->val.first, last_add->val.first))
-    	        		{
-					_maxi->end  = NULL;
-				       	_maxi = last_add;
-    	            			_maxi->end = _real_end;
-    	            			_real_end->daddy =  _maxi;
+				last_add->max = _maxi;
+    	    }
+    	    else
+    	    {
+    	        if (_compare(_maxi->val.first, last_add->val.first))
+    	        {
+    	            _maxi->end  = NULL;
+    	            _maxi = last_add;
+    	            _maxi->end = _real_end;
+    	            _real_end->daddy =  _maxi;
 					_maxi->max = _maxi;
-					add_max();
-    	        		}
-    	    		}
+					last_add->daddy->max = NULL;
+    	        }
+    	    }
 			last_add->end = _real_end;
-    		}
+    	}
 
 		void	if_del_max(node_ptr todel,  const key_type &val)
 		{
@@ -204,7 +199,6 @@ namespace ft
 				_maxi->end = _real_end;
 				_real_end->daddy = _maxi;
 				_maxi->max = _maxi;
-				add_max();
 			}
 			if (todel == NULL)
 				return;
@@ -222,42 +216,42 @@ namespace ft
 				_maxi->end = _real_end;
 				_real_end->daddy = _maxi;
 				_maxi->max = _maxi;
-				add_max();
+				if (todel->daddy)
+					todel->daddy->max = NULL;
 			}
 		}
 
-		// ROTATIONS
+
+				//////////			rotating /////////////////
+
 
 		void    choose_rotate(node_ptr current, int factor)
-		{
-			int	left_height;
-    	    		int	right_height;
+  		  {
+    	    int        left_height;
+    	    int        right_height;
 
-    	  		left_height = 0;
-    	   		right_height = 0;
-    	   
-		       
-			if (factor <= -2)
-    	    		{
-    	      			if (current->right->left != NULL)
-    					RL_rotate(current, current->right, current->right->left);
-    	        		else
-    	            			LL_rotate(current, current->right);
-    	    		}
-    	    		else
-    	    		{
-    	        		if (current->left->right != NULL)
-    	            			LR_rotate(current, current->left, current->left->right);
-    	        		else
-    	            			RR_rotate(current, current->left);
-    	    		}
-    		}
-
+    	    left_height = 0;
+    	    right_height = 0;
+    	    if (factor <= -2)
+    	    {
+    	        if (current->right->left != NULL)
+    	            RL_rotate(current, current->right, current->right->left);
+    	        else
+    	            LL_rotate(current, current->right);
+    	    }
+    	    else
+    	    {
+    	        if (current->left->right != NULL)
+    	            LR_rotate(current, current->left, current->left->right);
+    	        else
+    	            RR_rotate(current, current->left);
+    	    }
+    	}
 		void    balancing(node_ptr current)
-	    	{
-			int left_height;
-    	   	 	int right_height;
-    	    		int factor;
+    	{
+    	    int            left_height;
+    	    int            right_height;
+    	    int            factor;
 
     	    while (current != NULL)
     	    {
@@ -288,7 +282,6 @@ namespace ft
 			{
 				_root = parent;
 				update_height(grandpa);
-				//update_height(parent); //delete
 				return ;
 			}
 			if (tie->left == grandpa)
@@ -296,7 +289,6 @@ namespace ft
 			else
 				tie->right = parent;
 			update_height(grandpa);
-			//update_height(parent); //delete
 		}
 
 
@@ -315,7 +307,6 @@ namespace ft
 			{
 				_root = parent;
 				update_height(grandpa);
-				//update_height(parent);//delete
 				return ;
 			}
 			if (tie->left == grandpa)
@@ -323,7 +314,6 @@ namespace ft
 			else
 				tie->right = parent;
 			update_height(grandpa);
-		//	update_height(parent);//delete
 		}
 
 		void	LR_rotate(node_ptr grandpa, node_ptr parent, node_ptr child)
@@ -350,8 +340,7 @@ namespace ft
 				_root = child;
 				child->daddy = NULL;
 				update_height(grandpa);
-				solo_update_height(parent); //opti possible
-				//update_height(child); //delete
+				solo_update_height(parent); 
 				return ;
 			}
 			if (tie->left == grandpa)
@@ -360,8 +349,7 @@ namespace ft
 				tie->right = child;
 			child->daddy = tie;
 			update_height(grandpa);
-			solo_update_height(parent); //opti possible
-		//	update_height(child); //delete
+			solo_update_height(parent); 
 		}	
 
 		void	RL_rotate(node_ptr grandpa, node_ptr parent, node_ptr child)
@@ -590,14 +578,13 @@ namespace ft
 				return(1);
 			}
 		}
-			return(0);
+		return(0);
 		}
 
 		size_type size() const
 		{
 			return(_size);
 		}
-
 		node_ptr 	get_root() const
 		{
 			return(_root);
@@ -617,8 +604,8 @@ namespace ft
 					return (1);
 			}
 			return(0);
-		}
 
+		}
 		iterator	found_key(const key_type &val) const
 		{
 			node_ptr	cursor = _root;
@@ -639,7 +626,6 @@ namespace ft
 		{
 			return _alloc.max_size();
 		}
-
 		void	swap(tree &x)
 		{
 
@@ -657,24 +643,21 @@ namespace ft
 			_maxi = maxou;
 			_root = root;
 			_real_end = endi;
+
 		}
 	};
-
+template<class Content, class Compare, class Alloc>
+bool operator<(const tree<Content, Compare, Alloc>& lhs,  const tree<Content, Compare, Alloc>& rhs){
+	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+}
 	template<class Content, class Compare, class Alloc>
-	bool operator<(const tree<Content, Compare, Alloc>& lhs,  const tree<Content, Compare, Alloc>& rhs)
-	{
-		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-	}
+bool operator>(const tree<Content, Compare, Alloc>& lhs,  const tree<Content, Compare, Alloc>& rhs){
+	return (lhs < rhs);
+}
+
+template<class Content, class Compare, class Alloc>
+bool operator==(const tree<Content, Compare, Alloc>& lhs, const tree<Content, Compare, Alloc>& rhs){
+	return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+}
 	
-	template<class Content, class Compare, class Alloc>
-	bool operator>(const tree<Content, Compare, Alloc>& lhs,  const tree<Content, Compare, Alloc>& rhs)
-	{
-		return (lhs < rhs);
-	}
-
-	template<class Content, class Compare, class Alloc>
-	bool operator==(const tree<Content, Compare, Alloc>& lhs, const tree<Content, Compare, Alloc>& rhs)
-	{
-		return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-	}
 }

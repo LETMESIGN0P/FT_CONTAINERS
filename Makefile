@@ -7,6 +7,7 @@ SRCS		=	main.cpp \
 
 INC		=	stack.h \
 			vector.h \
+			distance.h \
 			map.h \
 			avl_tree.h \
 			iterator_traits.h \
