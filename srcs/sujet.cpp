@@ -2,7 +2,7 @@
 #include <string>
 #include <deque>
 
-#if 1 //CREATE A REAL STL EXAMPLE
+#if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -66,6 +66,7 @@ int main(int argc, char** argv) {
 
 	for (int i = 0; i < COUNT; i++)
 	{
+		std::cout << i << std::endl;
 		vector_buffer.push_back(Buffer());
 	}
 

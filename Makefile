@@ -1,6 +1,6 @@
 NAME		=	test
 
-SRCS		=	main.cpp \
+SRCS		=	sujet.cpp \
 			tests_vector.cpp
 
 INC		=	stack.h \

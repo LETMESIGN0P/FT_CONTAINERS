@@ -1,27 +1,29 @@
 #pragma once
 
-#include <deque>
+#include <vector.h>
 
 namespace ft
 {
-	template <class T, class Container = std::deque<T> >
+	template <class T, class Container = ft::vector<T> >
 	class stack
 	{		
 		// MEMBER TYPES / VALUES
 		
-		Container _cntr;
+		protected :
+
+		Container c;
 		
 		public :
 
-		typedef Container container_type;
-		typedef T value_type;
-		typedef size_t size_type;
+		typedef Container	container_type;
+		typedef T		value_type;
+		typedef size_t		size_type;
 		
 		// CONSTRUCTORS / DESTRUCTORS
 
 		explicit stack(const Container &cntr = Container())
 		{
-			_cntr = cntr;
+			c = cntr;
 		}
 
 		~stack()
@@ -32,32 +34,32 @@ namespace ft
 
 		bool empty() const
 		{
-			return (_cntr.empty());
+			return (c.empty());
 		}
 
 		size_type size() const
 		{
-			return (_cntr.size());
+			return (c.size());
 		}
 
 		value_type& top()
 		{
-			return (_cntr.back());
+			return (c.back());
 		}
 
 		const value_type& top() const
 		{
-			return (_cntr.back());
+			return (c.back());
 		}
 
 		void push (const value_type& val)
 		{
-			_cntr.push_back(val);
+			c.push_back(val);
 		}
 
 		void pop()
 		{
-			_cntr.pop_back();
+			c.pop_back();
 		}
 
 		// OPERATORS

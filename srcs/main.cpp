@@ -49,7 +49,6 @@ int main(int ac, char **av)
 		system("g++ -Wall -Wextra -Werror srcs/tests_map.cpp -Iincludes -D TESTED_NAMESPACE=ft");
 		system("time ./a.out > t2");
 		system("diff t1 t2");
-		system("rm a.out");
 	}
 
 	return (0);

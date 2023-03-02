@@ -8,7 +8,7 @@ namespace ft
 		class const_bidirectional_iterator
 		{
 			public :
-				typedef	const T							value_type;
+				typedef T							value_type;
 				typedef	const T*						pointer;
 				typedef	const T&						reference;
 				typedef std::ptrdiff_t						difference_type;

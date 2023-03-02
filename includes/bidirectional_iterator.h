@@ -55,7 +55,7 @@ namespace ft
 				bidirectional_iterator	&operator=(const const_bidirectional_iterator<U> &copy)
 				{
 					_it = copy._it;
-					_pair = copy._pair;
+					_pair = (pointer)copy._pair;
 					return (*this);
 				}
 
