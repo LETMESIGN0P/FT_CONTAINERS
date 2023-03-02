@@ -2,7 +2,7 @@
 #include <list>
 #include <map.h>
 
-#define TESTED_NAMESPACE ft
+//#define TESTED_NAMESPACE ft
 
 #define _pair TESTED_NAMESPACE::pair
 

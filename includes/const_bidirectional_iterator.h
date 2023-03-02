@@ -8,12 +8,12 @@ namespace ft
 		class const_bidirectional_iterator
 		{
 			public :
-				typedef	T							value_type;
-				typedef	T*							pointer;
-				typedef	T&							reference;
+				typedef	const T							value_type;
+				typedef	const T*						pointer;
+				typedef	const T&						reference;
 				typedef std::ptrdiff_t						difference_type;
 				typedef	ft::bidirectional_iterator_tag				iterator_category;
-				typedef const_bidirectional_iterator<const T>			const_it;
+				typedef const_bidirectional_iterator<T>				const_it;
 				typedef	Node<T>							elem_type;
 
 				elem_type	*_it;

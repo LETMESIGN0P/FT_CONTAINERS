@@ -2,14 +2,14 @@ NAME		=	test
 
 SRCS		=	main.cpp \
 			tests_vector.cpp
-			#tests_map.cpp \
-			tests_stack.cpp
 
 INC		=	stack.h \
 			vector.h \
 			distance.h \
 			map.h \
-			avl_tree.h \
+			tree.h \
+			node.h \
+			pair.h \
 			iterator_traits.h \
 			random_access_iterator.h \
 			reverse_iterator.h \
@@ -37,7 +37,7 @@ ${NAME}:		${OBJS}
 			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
 clean:
 			@${RM} ${OBJS}
-			@rm -rf objs
+			@rm -rf objs t1 t2
 
 fclean:			clean
 			@${RM} ${NAME}

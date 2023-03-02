@@ -8,6 +8,7 @@
 #include <stack>
 #include <vector>
 #include <map>
+#include <stdlib.h>
 
 #include <vector.h>
 #include <tests_containers.h>
@@ -33,34 +34,23 @@ int main(int ac, char **av)
 
 	else if (!strcmp(av[1], "map"))
 	{
-		std::cout << FG_YEL << "~==[ TESTS MAP ]==~" << FG_DEF << std::endl << std::endl << std::endl;
-
-		bool ok = v_test();
-
-		std::cout << std::endl << FG_YEL << "~==[ VERDICT : " << FG_DEF;
-		if (ok)
-			std::cout << FG_BLUE << "OK" << FG_DEF;
-		else
-			std::cout << FG_MAG << "KO" << FG_DEF;
-		std::cout << FG_YEL << " ]==~" << FG_DEF << std::endl;
-
+		system("g++ -Wall -Wextra -Werror srcs/tests_map.cpp -Iincludes -D TESTED_NAMESPACE=std");
+		system("time ./a.out > t1");
+		system("g++ -Wall -Wextra -Werror srcs/tests_map.cpp -Iincludes -D TESTED_NAMESPACE=ft");
+		system("time ./a.out > t2");
+		system("diff t1 t2");
+		system("rm a.out");
 	}
 
 	else if (!strcmp(av[1],"stack"))
 	{
-		std::cout << FG_YEL << "~==[ TESTS STACK ]==~" << FG_DEF << std::endl << std::endl << std::endl;
-
-		bool ok = v_test();
-
-		std::cout << std::endl << FG_YEL << "~==[ VERDICT : " << FG_DEF;
-		if (ok)
-			std::cout << FG_BLUE << "OK" << FG_DEF;
-		else
-			std::cout << FG_MAG << "KO" << FG_DEF;
-		std::cout << FG_YEL << " ]==~" << FG_DEF << std::endl;
-
+		system("g++ -Wall -Wextra -Werror srcs/tests_map.cpp -Iincludes -D TESTED_NAMESPACE=std");
+		system("time ./a.out > t1");
+		system("g++ -Wall -Wextra -Werror srcs/tests_map.cpp -Iincludes -D TESTED_NAMESPACE=ft");
+		system("time ./a.out > t2");
+		system("diff t1 t2");
+		system("rm a.out");
 	}
 
 	return (0);
-} 
-
+}
