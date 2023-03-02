@@ -1,5 +1,6 @@
-#pragma once 
-#include "../includes/pair.hpp"
+#pragma once
+
+#include <pair.h>
 
 namespace ft
 {
@@ -19,9 +20,13 @@ namespace ft
 			value_type      val;
 		
 
-			Node():  left(NULL), right(NULL), daddy(NULL), end(NULL), max(NULL),  print(1), height(0),  val(NULL){}
-			
-			Node(const value_type &val): left(NULL), right(NULL), daddy(NULL), end(NULL), max(NULL),  print(1), height(0), val(val){} 
+			Node():  left(NULL), right(NULL), daddy(NULL), end(NULL), max(NULL),  print(1), height(0),  val(NULL)
+			{
+			}
+
+			Node(const value_type &__val): left(NULL), right(NULL), daddy(NULL), end(NULL), max(NULL),  print(1), height(0), val(__val)
+			{
+			} 
 
 			value_type *get_pair()
 			{
@@ -36,6 +41,7 @@ namespace ft
 					return (search);
 				while (search->left)
 					search = search->left;
+
 				return (search);
 			}
 
@@ -66,7 +72,7 @@ namespace ft
 				return tmpdaddy;
 			}
 
-			Node *prev(void)
+			Node *prev()
 			{
 				Node *tmp = this;
 	
@@ -97,6 +103,5 @@ namespace ft
 				}
 				return (size);
 			}
-
 	};
 }
