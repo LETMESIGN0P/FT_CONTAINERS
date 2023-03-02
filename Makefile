@@ -1,8 +1,7 @@
 NAME		=	test
 
-SRCS		=	mainft.cpp
-			#main.cpp
-			#tests_vector.cpp
+SRCS		=	main.cpp \
+			tests_vector.cpp
 			#tests_map.cpp \
 			tests_stack.cpp
 

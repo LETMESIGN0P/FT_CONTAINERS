@@ -167,6 +167,7 @@ namespace ft
 		{
 			return (_it[n]);
 		}
+	};
 
 		template <class T>
 		random_access_iterator<T> operator+(typename random_access_iterator<T>::difference_type n, const random_access_iterator<T>& it)
@@ -179,5 +180,4 @@ namespace ft
 		{
     			return (random_access_iterator<T>(rhs.base() - n));
 		}
-	};
 }
