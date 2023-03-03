@@ -1,6 +1,6 @@
 NAME		=	test
 
-SRCS		=	sujet.cpp \
+SRCS		=	main.cpp \
 			tests_vector.cpp
 
 INC		=	stack.h \
@@ -37,7 +37,7 @@ ${NAME}:		${OBJS}
 			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
 clean:
 			@${RM} ${OBJS}
-			@rm -rf objs t1 t2
+			@rm -rf objs srcs/t1 srcs/t2 srcs/a.out
 
 fclean:			clean
 			@${RM} ${NAME}
